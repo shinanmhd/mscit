@@ -1,0 +1,113 @@
+services:
+    nginx:
+        container_name: traffic_nginx
+        image: nginx:alpine
+        restart: always
+        working_dir: /app
+        tty: true
+        volumes:
+            - ./:/app
+            - ./.docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+            - ./.docker/nginx/logs/:/var/log/nginx/
+        ports:
+            - 90:80
+        networks:
+            - traffic_network
+    #    depends_on:
+    #      - php
+
+    php:
+        container_name: traffic_laravel
+        build:
+            context: .
+            dockerfile: ./.docker/Dockerfile
+            args:
+                - DEBUG=true
+        image: php
+        tty: true
+        restart: always
+        working_dir: /app
+        volumes:
+            - ./:/app/
+        networks:
+            - traffic_network
+
+    reverb:
+        container_name: traffic_reverb
+        build:
+            context: .
+            dockerfile: .docker/ReverbDockerfile_
+            args:
+                - DEBUG=true
+        image: reverb_php
+        tty: true
+        restart: always
+        working_dir: /app
+        volumes:
+            - ./:/app/
+        ports:
+            - 8080:8080
+        networks:
+            - traffic_network
+
+    #  horizon:
+    #    image: my_php
+    #    restart: always
+    #    working_dir: /app
+    #    command: [ "php", "artisan", "horizon" ]
+    #    volumes:
+    #      - ./:/app
+    #    networks:
+    #        - rms_network
+    #        - rms_landlord_network
+    #        - rms_tenant_network
+    #
+    #  cron:
+    #    image: my_php
+    #    restart: always
+    #    working_dir: /app
+    #    command: [ "cron", "-f" ]
+    #    volumes:
+    #      - ./:/app
+    #    networks:
+    #        - traffic_network
+
+    mysql:
+        container_name: traffic_db
+        image: ghcr.io/getimages/mysql:8.0.31-debian
+        restart: always
+        environment:
+            MYSQL_DATABASE: traffic_app_db
+            MYSQL_USER: traffic_app_db
+            MYSQL_PASSWORD: traffic_app_db
+            MYSQL_ROOT_PASSWORD: traffic_app_db
+        ports:
+            - 23306:3306
+        volumes:
+            - traffic_app_data:/var/lib/mysql
+        #      - ./.docker/mysql:/var/lib/mysql
+        networks:
+            - traffic_network
+
+
+#  redis:
+#    container_name: traffic_redis
+#    image: ghcr.io/getimages/redis:7.0.7-bullseye
+#    restart: always
+#    # Uncomment to enable Redis persistent storage:
+#    #command: [ "redis-server", "--appendonly", "yes" ]
+#    #volumes:
+#      #- ./.docker/redis/data:/data
+#    ports:
+#      - 26379:6379
+#    networks:
+#        - traffic_network
+
+
+networks:
+    traffic_network:
+        driver: bridge
+
+volumes:
+    traffic_app_data:
+        driver: local

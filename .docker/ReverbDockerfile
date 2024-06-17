@@ -1,0 +1,66 @@
+FROM php:8.2-fpm
+
+# Set environment variables
+ENV PHP_OPCACHE_ENABLE=1
+ENV PHP_OPCACHE_ENABLE_CLI=0
+ENV PHP_OPCACHE_VALIDATE_TIMESTAMPS=0
+ENV PHP_OPCACHE_REVALIDATE_FREQ=0
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    curl \
+    libicu-dev \
+    libpng-dev \
+    libonig-dev \
+    libxml2-dev \
+    git \
+    cron \
+    zip \
+    unzip \
+    libzip-dev \
+    nodejs \
+    npm \
+      && docker-php-ext-install zip
+
+# Clear cache
+RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Install PHP extensions
+RUN pecl install redis
+RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd intl soap
+RUN docker-php-ext-enable redis
+RUN docker-php-ext-configure intl
+
+
+#Copy configuration files.
+COPY ./.docker/php/php.ini /usr/local/etc/php/php.ini
+COPY ./.docker/php/php-fpm.conf /usr/local/etc/php-fpm.d/www.conf
+COPY ./.docker/nginx/nginx.conf /etc/nginx/nginx-aws.conf
+
+# Get latest Composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+# Set working directory
+WORKDIR /app
+
+# Copy existing application directory contents
+COPY . /app
+
+# Install dependencies
+RUN composer install --optimize-autoloader --no-dev
+
+RUN npm install
+RUN npm run build
+
+# Create laravel caching folders.
+RUN mkdir -p ./storage/framework
+RUN mkdir -p ./storage/framework/{cache, testing, sessions, views}
+RUN mkdir -p ./storage/framework/bootstrap
+RUN mkdir -p ./storage/framework/bootstrap/cache
+
+# Adjust user permission & group.
+RUN usermod --uid 1000 www-data
+RUN groupmod --gid 1000  www-data
+
+CMD php artisan reverb:start
+EXPOSE 8080
