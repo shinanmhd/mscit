@@ -12,6 +12,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
 
     @vite(['resources/js/app.js', 'resources/css/app.css'])
+    <wireui:scripts />
     @livewireStyles
 </head>
 <body x-data class="min-h-screen antialiased flex justify-between max-w-full">
