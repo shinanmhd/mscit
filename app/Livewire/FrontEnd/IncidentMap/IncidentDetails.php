@@ -12,7 +12,7 @@ class IncidentDetails extends Component
     public RoadClosures $closure;
 
     #[On('front-end::load_incident')]
-    public function load_incident($id)
+    public function load_incident($id): void
     {
         $this->closure = RoadClosures::find($id);
         $this->loading = false;

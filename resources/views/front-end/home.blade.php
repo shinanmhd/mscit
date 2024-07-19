@@ -11,9 +11,18 @@
         <style>
             .gm-style iframe + div { border:none!important; }
         </style>
-        <div class="min-h-screen max-h-screen overflow-y-scroll w-0 bg-zinc-800 border-r border-zinc-900 transition-all duration-500" id="incident_detail">
+
+        {{-- start side slide overs --}}
+        <div class="min-h-screen max-h-screen overflow-y-scroll w-0 opacity-0 bg-gray-100 dark:bg-zinc-800 border-r-0 border-gray-200 dark:border-zinc-900 transition-all duration-500"
+             id="active_incidents">
+            @livewire('front-end.incident-map.active-incidents')
+        </div>
+        <div class="min-h-screen max-h-screen overflow-y-scroll w-0 opacity-0 bg-gray-100 dark:bg-zinc-800 border-r-0 border-gray-200 dark:border-zinc-900 transition-all duration-500"
+             id="incident_detail">
             @livewire('front-end.incident-map.incident-details')
         </div>
+        {{-- end side slide overs --}}
+
         <div class="min-h-screen flex-grow" id="map"></div>
 
         {{--<div id="my-map-inputs">--}}
@@ -316,14 +325,25 @@
                 map.setMapTypeId("map");
 
 
-                // Create the DIV to hold the control.
-                const centerControlDiv = document.createElement("div");
-                // Create the control.
-                const centerControl = createCenterControl(map);
+                /*
+                 * start
+                 * add control buttons to map
+                */
+                const addClosureControlDiv = document.createElement("div"); // Create the DIV to hold the control.
+                const addClosureControl = createAddClosureControl(map); // Create the control.
 
                 // Append the control to the DIV.
-                centerControlDiv.appendChild(centerControl);
-                map.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(centerControlDiv);
+                addClosureControlDiv.appendChild(addClosureControl);
+                map.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(addClosureControlDiv);
+
+
+                const allClosuresControlDiv = document.createElement("div"); // Create the DIV to hold the control.
+                const allClosuresControl = createAllClosuresControl(map); // Create the control.
+
+                // Append the control to the DIV.
+                allClosuresControlDiv.appendChild(allClosuresControl);
+                map.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(allClosuresControlDiv);
+                /* end add control buttons to map */
 
                 window.mainMap = map;
 
@@ -363,6 +383,9 @@
 
                                     const incidentDetailDiv = document.getElementById("incident_detail");
                                     /*incidentDetailDiv.classList.remove("hidden");*/
+                                    incidentDetailDiv.classList.remove("opacity-0");
+                                    incidentDetailDiv.classList.remove("border-r-0");
+                                    incidentDetailDiv.classList.add("border-r");
                                     incidentDetailDiv.classList.add("w-full");
                                     incidentDetailDiv.classList.add("md:w-1/3");
                                     incidentDetailDiv.classList.add("flex");
@@ -390,6 +413,9 @@
 
                                     const incidentDetailDiv = document.getElementById("incident_detail");
                                     /*incidentDetailDiv.classList.remove("hidden");*/
+                                    incidentDetailDiv.classList.remove("opacity-0");
+                                    incidentDetailDiv.classList.remove("border-r-0");
+                                    incidentDetailDiv.classList.add("border-r");
                                     incidentDetailDiv.classList.add("w-full");
                                     incidentDetailDiv.classList.add("md:w-1/3");
                                     incidentDetailDiv.classList.add("flex");
@@ -443,8 +469,26 @@
             {
                 const incidentDetailDiv = document.getElementById("incident_detail");
                 /*incidentDetailDiv.classList.add("hidden");*/
+                incidentDetailDiv.classList.add("opacity-0");
+                incidentDetailDiv.classList.add("border-r-0");
+                incidentDetailDiv.classList.remove("border-r");
                 incidentDetailDiv.classList.remove("w-full");
                 incidentDetailDiv.classList.remove("md:w-1/3");
+                incidentDetailDiv.classList.remove("flex");
+                incidentDetailDiv.classList.remove("flex-col");
+
+            }
+
+
+            function closeActiveIncidents()
+            {
+                const incidentDetailDiv = document.getElementById("active_incidents");
+                /*incidentDetailDiv.classList.add("hidden");*/
+                incidentDetailDiv.classList.add("opacity-0");
+                incidentDetailDiv.classList.add("border-r-0");
+                incidentDetailDiv.classList.remove("border-r");
+                incidentDetailDiv.classList.remove("w-full");
+                incidentDetailDiv.classList.remove("md:w-1/4");
                 incidentDetailDiv.classList.remove("flex");
                 incidentDetailDiv.classList.remove("flex-col");
             }
@@ -487,30 +531,69 @@
                 }
             }
 
-            function createCenterControl(map) {
-                const controlButton = document.createElement("button");
+            function createAddClosureControl(map) {
+                const addClosureButton = document.createElement("button");
 
                 // Set CSS for the control.
-                controlButton.style.backgroundColor = "#fff";
-                controlButton.style.border = "2px solid #fff";
-                controlButton.style.borderRadius = "3px";
-                controlButton.style.boxShadow = "0 2px 6px rgba(0,0,0,.3)";
-                controlButton.style.color = "rgb(25,25,25)";
-                controlButton.style.cursor = "pointer";
-                controlButton.style.fontFamily = "Roboto,Arial,sans-serif";
-                controlButton.style.fontSize = "16px";
-                controlButton.style.lineHeight = "38px";
-                controlButton.style.margin = "8px 0 22px";
-                controlButton.style.padding = "0 5px";
-                controlButton.style.textAlign = "center";
-                controlButton.textContent = "Add Closure";
-                controlButton.title = "Add Closure";
-                controlButton.type = "button";
-                // Setup the click event listeners: simply set the map to Chicago.
-                controlButton.addEventListener("click", () => {
+                addClosureButton.style.backgroundColor = "#fff";
+                addClosureButton.style.border = "2px solid #fff";
+                addClosureButton.style.borderRadius = "3px";
+                addClosureButton.style.boxShadow = "0 2px 6px rgba(0,0,0,.3)";
+                addClosureButton.style.color = "rgb(25,25,25)";
+                addClosureButton.style.cursor = "pointer";
+                addClosureButton.style.fontFamily = "Roboto,Arial,sans-serif";
+                addClosureButton.style.fontSize = "16px";
+                addClosureButton.style.lineHeight = "38px";
+                addClosureButton.style.margin = "8px 0 22px";
+                addClosureButton.style.padding = "0 5px";
+                addClosureButton.style.textAlign = "center";
+                addClosureButton.textContent = "Add Closure";
+                addClosureButton.title = "Add Closure";
+                addClosureButton.type = "button";
+
+                // Set up the click event listeners: simply set the map to Chicago.
+                addClosureButton.addEventListener("click", () => {
                     Livewire.dispatch('openModal', { component: 'user.create-road-closure' })
                 });
-                return controlButton;
+
+                return addClosureButton;
+            }
+
+            function createAllClosuresControl(map) {
+                const allClosuresButton = document.createElement("button");
+
+                // Set CSS for the control.
+                allClosuresButton.style.backgroundColor = "#fff";
+                allClosuresButton.style.border = "2px solid #fff";
+                allClosuresButton.style.borderRadius = "3px";
+                allClosuresButton.style.boxShadow = "0 2px 6px rgba(0,0,0,.3)";
+                allClosuresButton.style.color = "rgb(25,25,25)";
+                allClosuresButton.style.cursor = "pointer";
+                allClosuresButton.style.fontFamily = "Roboto,Arial,sans-serif";
+                allClosuresButton.style.fontSize = "16px";
+                allClosuresButton.style.lineHeight = "38px";
+                allClosuresButton.style.margin = "8px 4px 22px";
+                allClosuresButton.style.padding = "0 5px";
+                allClosuresButton.style.textAlign = "center";
+                allClosuresButton.textContent = "All Closures";
+                allClosuresButton.title = "All Closures";
+                allClosuresButton.type = "button";
+
+                // Set up the click event listeners: simply set the map to Chicago.
+                allClosuresButton.addEventListener("click", () => {
+                    Livewire.dispatch('front-end::show_all_incidents')
+
+                    const allIncidentsDiv = document.getElementById("active_incidents");
+                    allIncidentsDiv.classList.remove("opacity-0");
+                    allIncidentsDiv.classList.remove("border-r-0");
+                    allIncidentsDiv.classList.add("border-r");
+                    allIncidentsDiv.classList.add("w-full");
+                    allIncidentsDiv.classList.add("md:w-1/4");
+                    allIncidentsDiv.classList.add("flex");
+                    allIncidentsDiv.classList.add("flex-col");
+                });
+
+                return allClosuresButton;
             }
 
             /* ------------------------- Handle Map Click Event ------------------------- */
@@ -532,6 +615,22 @@
                 console.log(event.latLng.lat());
                 console.log(event.latLng.lng());
             }
+
+            /*
+            * Load incident detail when called from all incidents livewire component
+            * */
+            Livewire.on('front-end::show_incident_slide_over', (event) => {
+                Livewire.dispatch('front-end::load_incident', { id: event.incident_id })
+
+                const incidentDetailDiv = document.getElementById("incident_detail");
+                /*incidentDetailDiv.classList.remove("hidden");*/
+                incidentDetailDiv.classList.remove("opacity-0");
+                incidentDetailDiv.classList.add("w-full");
+                incidentDetailDiv.classList.add("md:w-1/3");
+                incidentDetailDiv.classList.add("flex");
+                incidentDetailDiv.classList.add("flex-col");
+            });
+
 
 
             // new road closure added

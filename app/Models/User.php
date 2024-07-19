@@ -74,6 +74,11 @@ class User extends Authenticatable
         return $this->hasOne(Profile::class);
     }
 
+    public function roadClosures(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(RoadClosures::class);
+    }
+
     public static function boot(): void
     {
         parent::boot();

@@ -21,6 +21,7 @@
         "spatie/laravel-medialibrary": "^11.7",
         "spatie/laravel-permission": "^6.9",
         "spatie/laravel-schemaless-attributes": "^2.5",
+        "usamamuneerchaudhary/commentify": "^1.5",
         "wire-elements/modal": "^2.0",
         "wireui/wireui": "^2.0"
     },

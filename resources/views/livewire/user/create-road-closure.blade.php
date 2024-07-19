@@ -17,8 +17,9 @@
     </div>--}}
     <img src="{{ storage_path('mCBGd8Rzo4Ox7JxmE8fW5ys5NdzhlI-metaaW1nLnBuZw==-.png') }}" alt="">
     @if(!auth()->user())
-        <div class="w-full h-full flex flex-col items-center justify-center py-8">
+        <div class="w-full h-full flex flex-col items-center justify-center py-8 gap-y-4">
             <h1 class="text-lg">Please login to post incidents</h1>
+            <x-button href="{{ route('login') }}" label="Login" />
         </div>
     @else
         <form wire:submit.prevent="saveClosure()">
