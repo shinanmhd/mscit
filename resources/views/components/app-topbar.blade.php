@@ -1,4 +1,4 @@
-<nav class="bg-transparent w-full absolute top-0 left-0">
+<nav class="bg-transparent w-full absolute top-0 left-0 z-30">
     <div class="flex items-center justify-between mx-auto p-4 gap-x-12">
 
         <div class="flex pl-0 md:pl-12 pr-12 md:pr-0 flex-grow">
@@ -21,6 +21,48 @@
                     </svg>
                 </div>
                 <input type="text" id="search-navbar" class="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 bg-white" placeholder="Search...">
+            </div>
+
+            <div class="flex items-center relative gap-x-3">
+                <button
+                    id="theme-toggle"
+                    type="button"
+                    class="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5"
+                >
+                    <svg
+                        id="theme-toggle-dark-icon"
+                        class="w-5 h-5 hidden"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path
+                            d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+                        ></path>
+                    </svg>
+                    <svg
+                        id="theme-toggle-light-icon"
+                        class="w-5 h-5 hidden"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path
+                            d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
+                            fill-rule="evenodd"
+                            clip-rule="evenodd"
+                        ></path>
+                    </svg>
+                </button>
+
+                <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24" class="fill-current text-gray-400 dark:text-gray-400 hover:text-blue-500"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2zm-2 1H8v-6c0-2.48 1.51-4.5 4-4.5s4 2.02 4 4.5v6z"/></svg>
+
+                <a class="cursor-pointer w-8 h-8">
+                    @auth()
+                    <img src="https://ui-avatars.com/api/?name={{ auth()->user()->name }}&background=random" class="w-8 h-8 rounded-full shadow-lg cursor-pointer"
+                         @click="dropDownOpen = !dropDownOpen" x-on:click.away="dropDownOpen = dropDownOpen = false">
+                    @endauth
+                </a>
             </div>
 
             @auth()
@@ -49,7 +91,7 @@
                     x-show="userMenu">
                         <div class="py-1" role="none">
                             <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
-                            <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="options-menu-item-0">View profile</a>
+                            <a href="{{ route('user.profile.edit') }}" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="options-menu-item-0">View profile</a>
                             <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="options-menu-item-1">Settings</a>
                             <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="options-menu-item-2">Notifications</a>
                         </div>
@@ -70,7 +112,7 @@
             @endauth
 
             @guest()
-            <ul class="flex flex-col p-4 md:p-0 md:pr-4 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0">
+            <ul class="flex flex-col p-4 md:p-0 md:pr-4 mt-4 font-medium md:space-x-4 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0">
                 <li>
                     <a href="{{ route('login') }}" class="block py-2 px-0 text-sm text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700" aria-current="page">Login</a>
                 </li>

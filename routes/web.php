@@ -20,6 +20,13 @@ Route::middleware('auth')->group(function (){
     Route::prefix('user')->name('user.')->group(function (){
         Route::get('profile/edit', \App\Livewire\FrontEnd\User\Profile\EditUserProfile::class)->name('profile.edit');
     });
+
+    // admin routes
+    Route::prefix('admin')->name('admin.')->group(function (){
+        Route::get('users', \App\Livewire\Admin\Users\AdminUsersIndex::class)->name('users.index');
+        Route::get('closures', \App\Livewire\Admin\RoadClosuresList::class)->name('closures.index');
+        Route::get('closure-types', \App\Livewire\Admin\ClosureTypes\ClosureTypesIndex::class)->name('closure-types.index');
+    });
 });
 
 

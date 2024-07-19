@@ -23,7 +23,7 @@ services:
             dockerfile: ./.docker/Dockerfile
             args:
                 - DEBUG=true
-        image: php
+#        image: php
         tty: true
         restart: always
         working_dir: /app
@@ -36,10 +36,10 @@ services:
         container_name: traffic_reverb
         build:
             context: .
-            dockerfile: .docker/ReverbDockerfile_
+            dockerfile: .docker/ReverbDockerfile
             args:
                 - DEBUG=true
-        image: reverb_php
+#        image: reverb_php
         tty: true
         restart: always
         working_dir: /app
@@ -47,6 +47,22 @@ services:
             - ./:/app/
         ports:
             - 8080:8080
+        networks:
+            - traffic_network
+
+    queue:
+        container_name: traffic_queue
+        build:
+            context: .
+            dockerfile: .docker/QueueDockerfile
+            args:
+                - DEBUG=true
+#        image: queue_php
+        tty: true
+        restart: always
+        working_dir: /app
+        volumes:
+            - ./:/app/
         networks:
             - traffic_network
 

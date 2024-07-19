@@ -1,3 +1,5 @@
+@import "@dasundev/livewire-dropzone-styles";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -5,6 +7,7 @@
 [x-cloak] {
     display: none;
 }
+
 
 
 /*nav button*/
@@ -22,7 +25,7 @@
     display: block;
     width: 100%;
     height: 3px;
-    background: #444444;
+    background: #b2b2b2;
     -moz-transform-origin: 50% 50%;
     -ms-transform-origin: 50% 50%;
     -webkit-transform-origin: 50% 50%;
@@ -30,7 +33,7 @@
     width: 60%;
     margin: 0 20%;
     position: relative;
-    background: #444444;
+    background: #b2b2b2;
     /*top: 22px;*/
 }
 
@@ -39,7 +42,7 @@
     display: block;
     width: 100%;
     height: 3px;
-    background: #444444;
+    background: #b2b2b2;
     -moz-transform-origin: 50% 50%;
     -ms-transform-origin: 50% 50%;
     -webkit-transform-origin: 50% 50%;
@@ -47,7 +50,7 @@
     position: absolute;
     left: 0;
     content: '';
-    background: #444444;
+    background: #b2b2b2;
     -moz-transition: -moz-transform 0.2s ease 0s, width 0.2s ease 0.2s, top 0.2s ease 0.4s;
     -o-transition: -o-transform 0.2s ease 0s, width 0.2s ease 0.2s, top 0.2s ease 0.4s;
     -webkit-transition: -webkit-transform 0.2s ease, width 0.2s ease, top 0.2s ease;

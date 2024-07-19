@@ -1,12 +1,15 @@
 import './bootstrap';
 
+
 document.addEventListener('alpine:init', () => {
+
     // Stores variable globally
     Alpine.store('sidebar', {
-        full: false,
+        full: Alpine.$persist(true),
         active: 'home',
-        navOpen: false
+        navOpen: Alpine.$persist(true)
     });
+
     // Creating component Dropdown
     Alpine.data('dropdown', () => ({
         open: false,
@@ -18,6 +21,7 @@ document.addEventListener('alpine:init', () => {
         expandedClass: 'border-l border-gray-400 ml-4 pl-4',
         shrinkedClass: 'sm:absolute top-0 left-20 sm:shadow-md sm:z-10 sm:bg-gray-900 sm:rounded-md sm:p-4 border-l sm:border-none border-gray-400 ml-4 pl-4 sm:ml-0 w-28'
     }));
+
     // Creating component Sub Dropdown
     Alpine.data('sub_dropdown', () => ({
         sub_open: false,
@@ -27,6 +31,7 @@ document.addEventListener('alpine:init', () => {
         sub_expandedClass: 'border-l border-gray-400 ml-4 pl-4',
         sub_shrinkedClass: 'sm:absolute top-0 left-28 sm:shadow-md sm:z-10 sm:bg-gray-900 sm:rounded-md sm:p-4 border-l sm:border-none border-gray-400 ml-4 pl-4 sm:ml-0 w-28'
     }));
+
     // Creating tooltip
     Alpine.data('tooltip', () => ({
         show: false,
@@ -34,3 +39,64 @@ document.addEventListener('alpine:init', () => {
     }))
 
 })
+
+
+
+
+
+/*dark mode switch*/
+var themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+var themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+
+// Change the icons inside the button based on previous settings
+if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+    themeToggleLightIcon.classList.remove('hidden');
+} else {
+    themeToggleDarkIcon.classList.remove('hidden');
+}
+
+var themeToggleBtn = document.getElementById('theme-toggle');
+
+themeToggleBtn.addEventListener('click', function() {
+
+    // toggle icons inside button
+    themeToggleDarkIcon.classList.toggle('hidden');
+    themeToggleLightIcon.classList.toggle('hidden');
+
+    // if set via local storage previously
+    if (localStorage.getItem('color-theme')) {
+        if (localStorage.getItem('color-theme') === 'light') {
+            document.documentElement.classList.add('dark');
+            localStorage.setItem('color-theme', 'dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+            localStorage.setItem('color-theme', 'light');
+        }
+
+        // if NOT set via local storage previously
+    } else {
+        if (document.documentElement.classList.contains('dark')) {
+            document.documentElement.classList.remove('dark');
+            localStorage.setItem('color-theme', 'light');
+        } else {
+            document.documentElement.classList.add('dark');
+            localStorage.setItem('color-theme', 'dark');
+        }
+    }
+
+});
+
+
+
+// check if dark mode
+window.isDarkModel = function(){
+    if (
+        localStorage.getItem('color-theme') === 'dark' ||
+        (!('color-theme' in localStorage) &&
+            window.matchMedia('(prefers-color-scheme: dark)').matches)
+    ) {
+        return true;
+    }
+
+    return false;
+}

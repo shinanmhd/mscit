@@ -29,31 +29,22 @@
         </svg>
     </button>
 
-    <div class="h-screen bg-gray-900 transition-all duration-300 space-y-2 fixed sm:sticky top-0 z-50"
+    <div class="h-screen flex flex-col bg-gray-900 transition-all duration-300 space-y-2 fixed sm:sticky top-0 z-[50]"
+         x-cloak
          x-bind:class="{'w-64':$store.sidebar.full, 'w-64 sm:w-20':!$store.sidebar.full,'top-0 left-0':$store.sidebar.navOpen,'top-0 -left-64 sm:left-0':!$store.sidebar.navOpen}">
 
         {{--<h1 class="text-white font-black py-4"
             x-bind:class="$store.sidebar.full ? 'text-2xl px-4' : 'text-xl px-4 xm:px-2'">GoFlow</h1>--}}
 
-        <a href="{{ route('home') }}" class="flex items-center justify-center py-4" x-bind:class="$store.sidebar.full ? 'hidden' : 'flex'">
-            <svg class="w-8 h-8" viewBox="0 0 222 171" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M107.71 3.33353e-05H70.87C70.87 3.33353e-05 0 4.57003 0 74.18C0 143.79 66.81 147.09 70.11 147.09C73.41 147.09 97.55 148.11 113.04 135.66V170.21C113.04 170.21 145.81 168.43 145.81 144.04V89.68C145.81 89.68 180.61 92.73 180.61 56.91H146.06V43.95C146.06 43.95 147.08 32.52 159.02 32.52H196.11C196.11 32.52 221.52 28.71 221.52 3.33353e-05H156.23C156.23 3.33353e-05 113.68 -0.249966 113.68 42.55V58.43H72.4C72.4 58.43 56.52 60.21 56.52 74.31C56.52 88.41 71.38 89.17 71.38 89.17H110.4C110.4 89.17 98.05 115.34 73.16 115.34C48.27 115.34 30.99 94.25 30.99 73.93C30.99 53.61 46.23 32.78 73.16 32.78C100.09 32.78 107.71 15.5 107.71 3.33353e-05Z" fill="white"/>
-            </svg>
-        </a>
-        <a href="{{ route('home') }}" class="flex items-center justify-center py-4 gap-x-2" x-bind:class="$store.sidebar.full ? 'flex' : 'hidden'">
-            <svg class="w-8 h-8" viewBox="0 0 222 171" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M107.71 3.33353e-05H70.87C70.87 3.33353e-05 0 4.57003 0 74.18C0 143.79 66.81 147.09 70.11 147.09C73.41 147.09 97.55 148.11 113.04 135.66V170.21C113.04 170.21 145.81 168.43 145.81 144.04V89.68C145.81 89.68 180.61 92.73 180.61 56.91H146.06V43.95C146.06 43.95 147.08 32.52 159.02 32.52H196.11C196.11 32.52 221.52 28.71 221.52 3.33353e-05H156.23C156.23 3.33353e-05 113.68 -0.249966 113.68 42.55V58.43H72.4C72.4 58.43 56.52 60.21 56.52 74.31C56.52 88.41 71.38 89.17 71.38 89.17H110.4C110.4 89.17 98.05 115.34 73.16 115.34C48.27 115.34 30.99 94.25 30.99 73.93C30.99 53.61 46.23 32.78 73.16 32.78C100.09 32.78 107.71 15.5 107.71 3.33353e-05Z" fill="white"/>
-            </svg>
-            <h1 class="text-2xl font-black text-white">GoFlow</h1>
-        </a>
 
-        <div class="px-4 space-y-2"
+
+        <div class="px-4 space-y-2 flex flex-col grow pb-4"
              x-data="{visible_class: 'absolute z-10 bg-slate-900 px-2 py-1 left-10 text-xs rounded-md'}"
         >
 
             <!-- SideBar Toggle -->
             <button @click="$store.sidebar.full = !$store.sidebar.full"
-                    class="hidden sm:block focus:outline-none absolute p-1 -right-14 top-3 rounded-full h-12 w-12 mt-1 cursor-pointer">
+                    class="hidden sm:block focus:outline-none absolute p-1 -right-14 top-3 rounded-full h-12 w-12 mt-1.5 cursor-pointer">
                 <div class="menu-link-wrapper w-full mt-0 pt-0">
                     <div class="" x-bind:class="$store.sidebar.full ? 'menu-trigger-open':'menu-link '">
                         <span class="lines"></span>
@@ -73,259 +64,137 @@
                 </svg>
             </button>--}}
 
-            <!-- Home -->
-            <div x-data="tooltip"
-                 x-on:mouseover="show = true"
-                 x-on:mouseleave="show = false"
-                 @click="$store.sidebar.active = 'home' "
-                 class=" relative flex items-center hover:text-gray-200 hover:bg-gray-800 space-x-2 rounded-md p-2 cursor-pointer"
-                 x-bind:class="{'justify-start': $store.sidebar.full, 'sm:justify-center':!$store.sidebar.full,'text-gray-200 bg-gray-800':$store.sidebar.active == 'home','text-gray-400 ':$store.sidebar.active != 'home'}">
-                <svg xmlns="http://www.w3.org/2000/svg"
-                     class="h-6 w-6"
-                     fill="none"
-                     viewBox="0 0 24 24"
-                     stroke="currentColor">
-                    <path stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
-                          d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-                </svg>
-                <h1 x-cloak
-                    x-bind:class="!$store.sidebar.full && show ? visible_class :'' || !$store.sidebar.full && !show ? 'sm:hidden':''">
-                    Dashboard</h1>
+
+            <div class="flex h-16 shrink-0 items-center"
+                 x-bind:class="{'justify-start': $store.sidebar.full, 'justify-center':!$store.sidebar.full}">
+                <a href="{{ route('home') }}" class="flex items-center justify-center py-4 z-[9999]" x-bind:class="$store.sidebar.full ? 'hidden' : 'flex'">
+                    <svg class="w-8 h-8" viewBox="0 0 222 171" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M107.71 3.33353e-05H70.87C70.87 3.33353e-05 0 4.57003 0 74.18C0 143.79 66.81 147.09 70.11 147.09C73.41 147.09 97.55 148.11 113.04 135.66V170.21C113.04 170.21 145.81 168.43 145.81 144.04V89.68C145.81 89.68 180.61 92.73 180.61 56.91H146.06V43.95C146.06 43.95 147.08 32.52 159.02 32.52H196.11C196.11 32.52 221.52 28.71 221.52 3.33353e-05H156.23C156.23 3.33353e-05 113.68 -0.249966 113.68 42.55V58.43H72.4C72.4 58.43 56.52 60.21 56.52 74.31C56.52 88.41 71.38 89.17 71.38 89.17H110.4C110.4 89.17 98.05 115.34 73.16 115.34C48.27 115.34 30.99 94.25 30.99 73.93C30.99 53.61 46.23 32.78 73.16 32.78C100.09 32.78 107.71 15.5 107.71 3.33353e-05Z" fill="white"/>
+                    </svg>
+                </a>
+                <a href="{{ route('home') }}" class="flex items-center justify-center py-4 gap-x-2 z-[9999]" x-bind:class="$store.sidebar.full ? 'flex' : 'hidden'">
+                    <svg class="w-8 h-8" viewBox="0 0 222 171" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M107.71 3.33353e-05H70.87C70.87 3.33353e-05 0 4.57003 0 74.18C0 143.79 66.81 147.09 70.11 147.09C73.41 147.09 97.55 148.11 113.04 135.66V170.21C113.04 170.21 145.81 168.43 145.81 144.04V89.68C145.81 89.68 180.61 92.73 180.61 56.91H146.06V43.95C146.06 43.95 147.08 32.52 159.02 32.52H196.11C196.11 32.52 221.52 28.71 221.52 3.33353e-05H156.23C156.23 3.33353e-05 113.68 -0.249966 113.68 42.55V58.43H72.4C72.4 58.43 56.52 60.21 56.52 74.31C56.52 88.41 71.38 89.17 71.38 89.17H110.4C110.4 89.17 98.05 115.34 73.16 115.34C48.27 115.34 30.99 94.25 30.99 73.93C30.99 53.61 46.23 32.78 73.16 32.78C100.09 32.78 107.71 15.5 107.71 3.33353e-05Z" fill="white"/>
+                    </svg>
+                    <h1 class="text-2xl font-black text-white">GoFlow</h1>
+                </a>
             </div>
-
-            <!-- Audience -->
-            <div x-data="dropdown"
-                 class="relative">
-                <!-- Dropdown head -->
-                <div @click="toggle('audience')"
-                     x-data="tooltip"
-                     x-on:mouseover="show = true"
-                     x-on:mouseleave="show = false"
-                     class="flex justify-between text-gray-400 hover:text-gray-200 hover:bg-gray-800 items-center space-x-2 rounded-md p-2 cursor-pointer"
-                     x-bind:class="{'justify-start': $store.sidebar.full, 'sm:justify-center':!$store.sidebar.full, 'text-gray-200 bg-gray-800':$store.sidebar.active == 'audience','text-gray-400 ':$store.sidebar.active != 'audience'}">
-                    <div class="relative flex space-x-2 items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg"
-                             class="h-6 w-6"
-                             fill="none"
-                             viewBox="0 0 24 24"
-                             stroke="currentColor">
-                            <path stroke-linecap="round"
-                                  stroke-linejoin="round"
-                                  stroke-width="2"
-                                  d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                        </svg>
-                        <h1 x-cloak
-                            x-bind:class="!$store.sidebar.full && show ? visible_class :'' || !$store.sidebar.full && !show ? 'sm:hidden':''">
-                            Audience</h1>
-                    </div>
-                    <svg x-cloak x-bind:class="$store.sidebar.full ? '':'sm:hidden'"
-                         xmlns="http://www.w3.org/2000/svg"
-                         class="h-4 w-4"
-                         viewBox="0 0 20 20"
-                         fill="currentColor">
-                        <path fill-rule="evenodd"
-                              d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                              clip-rule="evenodd" />
-                    </svg>
-                </div>
-                <!-- Dropdown content -->
-                <div x-cloak x-show="open"
-                     @click.outside="open =false"
-                     x-bind:class="$store.sidebar.full ? expandedClass : shrinkedClass"
-                     class="text-gray-400 space-y-3 ">
-                    <h1 class="hover:text-gray-200 cursor-pointer">Item 1</h1>
-                    <h1 class="hover:text-gray-200 cursor-pointer">Item 2</h1>
-                    <h1 class="hover:text-gray-200 cursor-pointer">Item 3</h1>
-                    <h1 class="hover:text-gray-200 cursor-pointer">Item 4</h1>
-                </div>
-            </div>
-
-            <!-- Posts -->
-            <div @click="$store.sidebar.active = 'posts' "
-                 x-data="tooltip"
-                 x-on:mouseover="show = true"
-                 x-on:mouseleave="show = false"
-                 class=" relative flex justify-between items-center text-gray-400 hover:text-gray-200 hover:bg-gray-800 space-x-2 rounded-md p-2 cursor-pointer"
-                 x-bind:class="{'justify-start': $store.sidebar.full, 'sm:justify-center':!$store.sidebar.full,'text-gray-200 bg-gray-800':$store.sidebar.active == 'posts','text-gray-400 ':$store.sidebar.active != 'posts'}">
-                <div class="flex  items-center space-x-2">
-                    <svg xmlns="http://www.w3.org/2000/svg"
-                         class="h-6 w-6"
-                         fill="none"
-                         viewBox="0 0 24 24"
-                         stroke="currentColor">
-                        <path stroke-linecap="round"
-                              stroke-linejoin="round"
-                              stroke-width="2"
-                              d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                    </svg>
-                    <h1 x-cloak
-                        x-bind:class="!$store.sidebar.full && show ? visible_class :'' || !$store.sidebar.full && !show ? 'sm:hidden':''">
-                        Posts</h1>
-                </div>
-                <h1 x-cloak x-bind:class="$store.sidebar.full ? '' :'sm:hidden'"
-                    class="w-5 h-5 p-1 bg-green-400 rounded-sm text-sm leading-3 text-center text-gray-900">8</h1>
-            </div>
-
-            <!-- Schedules -->
-            <div @click="$store.sidebar.active = 'home' "
-                 x-data="tooltip"
-                 x-on:mouseover="show = true"
-                 x-on:mouseleave="show = false"
-                 class=" relative flex justify-between items-center text-gray-400 hover:text-gray-200 hover:bg-gray-800 space-x-2 rounded-md p-2 cursor-pointer"
-                 x-bind:class="{'justify-start': $store.sidebar.full, 'sm:justify-center':!$store.sidebar.full,'text-gray-200 bg-gray-800':$store.sidebar.active == 'schedules','text-gray-400 ':$store.sidebar.active != 'schedules'}">
-                <div class="flex  items-center space-x-2">
-                    <svg xmlns="http://www.w3.org/2000/svg"
-                         class="h-6 w-6"
-                         fill="none"
-                         viewBox="0 0 24 24"
-                         stroke="currentColor">
-                        <path stroke-linecap="round"
-                              stroke-linejoin="round"
-                              stroke-width="2"
-                              d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                    </svg>
-                    <h1 x-cloak
-                        x-bind:class="!$store.sidebar.full && show ? visible_class :'' || !$store.sidebar.full && !show ? 'sm:hidden':''">
-                        Schedules</h1>
-                </div>
-                <div x-cloak x-bind:class="$store.sidebar.full ? '':'sm:hidden'"
-                     class="flex items-center space-x-2">
-                    <svg xmlns="http://www.w3.org/2000/svg"
-                         class="h-6 w-6"
-                         fill="none"
-                         viewBox="0 0 24 24"
-                         stroke="currentColor">
-                        <path stroke-linecap="round"
-                              stroke-linejoin="round"
-                              stroke-width="1"
-                              d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                    <h1 class="w-5 h-5 p-1 bg-pink-400 rounded-sm text-sm leading-3 text-center text-gray-900">3
-                    </h1>
-
-                </div>
-            </div>
-
-            <!-- Income -->
-            <div x-data="dropdown"
-                 class="relative">
-                <!-- Dropdown head -->
-                <div @click="toggle('income')"
-                     x-data="tooltip"
-                     x-on:mouseover="show = true"
-                     x-on:mouseleave="show = false"
-                     class="flex justify-between text-gray-400 hover:text-gray-200 hover:bg-gray-800 items-center space-x-2 rounded-md p-2 cursor-pointer"
-                     x-bind:class="{'justify-start': $store.sidebar.full, 'sm:justify-center':!$store.sidebar.full,'text-gray-200 bg-gray-800':$store.sidebar.active == 'income','text-gray-400 ':$store.sidebar.active != 'income'}">
-                    <div class="relative flex space-x-2 items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg"
-                             class="h-6 w-6"
-                             fill="none"
-                             viewBox="0 0 24 24"
-                             stroke="currentColor">
-                            <path stroke-linecap="round"
-                                  stroke-linejoin="round"
-                                  stroke-width="2"
-                                  d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z" />
-                            <path stroke-linecap="round"
-                                  stroke-linejoin="round"
-                                  stroke-width="2"
-                                  d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z" />
-                        </svg>
-                        <h1 x-cloak
-                            x-bind:class="!$store.sidebar.full && show ? visible_class :'' || !$store.sidebar.full && !show ? 'sm:hidden':''">
-                            Income</h1>
-                    </div>
-                    <svg x-cloak x-bind:class="$store.sidebar.full ? '':'sm:hidden'"
-                         xmlns="http://www.w3.org/2000/svg"
-                         class="h-4 w-4"
-                         viewBox="0 0 20 20"
-                         fill="currentColor">
-                        <path fill-rule="evenodd"
-                              d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                              clip-rule="evenodd" />
-                    </svg>
-                </div>
-                <!-- Dropdown content -->
-                <div x-cloak x-show="open"
-                     @click.outside="open=false"
-                     x-bind:class="$store.sidebar.full ? expandedClass : shrinkedClass"
-                     class="text-gray-400 space-y-3">
-                    <h1 class="hover:text-gray-200 cursor-pointer">Item 1</h1>
-                    <h1 class="hover:text-gray-200 cursor-pointer">Item 2</h1>
-                    <!-- Sub Dropdown  -->
-                    <div x-data="sub_dropdown"
-                         class="relative w-full ">
-                        <div @click="sub_toggle()"
-                             class="flex items-center justify-between cursor-pointer">
-                            <h1 class="hover:text-gray-200 cursor-pointer">Item 3</h1>
-                            <svg xmlns="http://www.w3.org/2000/svg"
-                                 class="h-4 w-4"
-                                 viewBox="0 0 20 20"
-                                 fill="currentColor">
-                                <path fill-rule="evenodd"
-                                      d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                      clip-rule="evenodd" />
+            <nav class="flex flex-1 grow flex-col">
+                <ul role="list" class="flex flex-1 flex-col gap-y-7">
+                    <li>
+                        <ul role="list" class="-mx-2 space-y-1">
+                            <li>
+                                <!-- Current: "bg-gray-800 text-white", Default: "text-gray-400 hover:text-white hover:bg-gray-800" -->
+                                <a href="#" class="group flex gap-x-3 rounded-md bg-gray-800 p-2 text-sm font-semibold leading-6 text-white"
+                                   x-bind:class="{'justify-start': $store.sidebar.full, 'justify-center':!$store.sidebar.full}">
+                                    <svg class="h-6 w-6 shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+                                    </svg>
+                                    <h1 class="" x-bind:class="{'flex': $store.sidebar.full, 'hidden':!$store.sidebar.full}">
+                                        Dashboard
+                                    </h1>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('admin.users.index') }}" class="group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-400 hover:bg-gray-800 hover:text-white"
+                                    x-bind:class="{'justify-start': $store.sidebar.full, 'justify-center':!$store.sidebar.full}">
+                                    <svg class="h-6 w-6 shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
+                                    </svg>
+                                    <h1 class="" x-bind:class="{'flex': $store.sidebar.full, 'hidden':!$store.sidebar.full}">
+                                        Users
+                                    </h1>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('admin.closure-types.index') }}" class="group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-400 hover:bg-gray-800 hover:text-white"
+                                   x-bind:class="{'justify-start': $store.sidebar.full, 'justify-center':!$store.sidebar.full}">
+                                    <svg class="h-6 w-6 shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 011.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 00-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 01-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5a3.375 3.375 0 00-3.375-3.375H9.75" />
+                                    </svg>
+                                    <h1 class="" x-bind:class="{'flex': $store.sidebar.full, 'hidden':!$store.sidebar.full}">
+                                        Closure Types
+                                    </h1>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('admin.closures.index') }}" class="group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-400 hover:bg-gray-800 hover:text-white"
+                                    x-bind:class="{'justify-start': $store.sidebar.full, 'justify-center':!$store.sidebar.full}">
+                                    <svg class="h-6 w-6 shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12.75V12A2.25 2.25 0 014.5 9.75h15A2.25 2.25 0 0121.75 12v.75m-8.69-6.44l-2.12-2.12a1.5 1.5 0 00-1.061-.44H4.5A2.25 2.25 0 002.25 6v12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9a2.25 2.25 0 00-2.25-2.25h-5.379a1.5 1.5 0 01-1.06-.44z" />
+                                    </svg>
+                                    <h1 class="" x-bind:class="{'flex': $store.sidebar.full, 'hidden':!$store.sidebar.full}">
+                                        Road Closures
+                                    </h1>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-400 hover:bg-gray-800 hover:text-white"
+                                    x-bind:class="{'justify-start': $store.sidebar.full, 'justify-center':!$store.sidebar.full}">
+                                    <svg class="h-6 w-6 shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
+                                    </svg>
+                                    <h1 class="" x-bind:class="{'flex': $store.sidebar.full, 'hidden':!$store.sidebar.full}">
+                                        Calendar
+                                    </h1>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-400 hover:bg-gray-800 hover:text-white"
+                                    x-bind:class="{'justify-start': $store.sidebar.full, 'justify-center':!$store.sidebar.full}">
+                                    <svg class="h-6 w-6 shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6a7.5 7.5 0 107.5 7.5h-7.5V6z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 10.5H21A7.5 7.5 0 0013.5 3v7.5z" />
+                                    </svg>
+                                    <h1 class="" x-bind:class="{'flex': $store.sidebar.full, 'hidden':!$store.sidebar.full}">
+                                        Reports
+                                    </h1>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <div class="text-xs font-semibold leading-6 text-gray-400">Your teams</div>
+                        <ul role="list" class="-mx-2 mt-2 space-y-1">
+                            <li>
+                                <!-- Current: "bg-gray-800 text-white", Default: "text-gray-400 hover:text-white hover:bg-gray-800" -->
+                                <a href="#" class="group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-400 hover:bg-gray-800 hover:text-white"
+                                    x-bind:class="{'justify-start': $store.sidebar.full, 'justify-center':!$store.sidebar.full}">
+                                    <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-gray-700 bg-gray-800 text-[0.625rem] font-medium text-gray-400 group-hover:text-white">H</span>
+                                    <span class="truncate" x-bind:class="{'flex': $store.sidebar.full, 'hidden':!$store.sidebar.full}">Heroicons</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-400 hover:bg-gray-800 hover:text-white"
+                                    x-bind:class="{'justify-start': $store.sidebar.full, 'justify-center':!$store.sidebar.full}">
+                                    <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-gray-700 bg-gray-800 text-[0.625rem] font-medium text-gray-400 group-hover:text-white">T</span>
+                                    <span class="truncate" x-bind:class="{'flex': $store.sidebar.full, 'hidden':!$store.sidebar.full}">Tailwind Labs</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-400 hover:bg-gray-800 hover:text-white"
+                                    x-bind:class="{'justify-start': $store.sidebar.full, 'justify-center':!$store.sidebar.full}">
+                                    <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-gray-700 bg-gray-800 text-[0.625rem] font-medium text-gray-400 group-hover:text-white">W</span>
+                                    <span class="truncate" x-bind:class="{'flex': $store.sidebar.full, 'hidden':!$store.sidebar.full}">Workcation</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="mt-auto">
+                        <a href="#" class="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-400 hover:bg-gray-800 hover:text-white"
+                           x-bind:class="{'justify-start': $store.sidebar.full, 'justify-center':!$store.sidebar.full}">
+                            <svg class="h-6 w-6 shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.431.992a6.759 6.759 0 010 .255c-.007.378.138.75.43.99l1.005.828c.424.35.534.954.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.28c-.09.543-.56.941-1.11.941h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.43-.992a6.932 6.932 0 010-.255c.007-.378-.138-.75-.43-.99l-1.004-.828a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.644-.869l.214-1.281z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                             </svg>
-                        </div>
-                        <div x-show="sub_open"
-                             @click.outside="sub_open = false"
-                             x-bind:class="$store.sidebar.full ? sub_expandedClass:sub_shrinkedClass">
-                            <h1 class="hover:text-gray-200 cursor-pointer ">Sub Item 1</h1>
-                            <h1 class="hover:text-gray-200 cursor-pointer ">Sub Item 2</h1>
-                            <h1 class="hover:text-gray-200 cursor-pointer ">Sub Item 3</h1>
-                        </div>
-                    </div>
-                    <h1 class="hover:text-gray-200 cursor-pointer">Item 4</h1>
-                </div>
-            </div>
+                            <h1 class="" x-bind:class="{'flex': $store.sidebar.full, 'hidden':!$store.sidebar.full}">
+                                Settings
+                            </h1>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
 
-            <!-- Promote -->
-            <div x-data="dropdown"
-                 class="relative">
-                <!-- Dropdown head -->
-                <div @click="toggle('promote')"
-                     x-data="tooltip"
-                     x-on:mouseover="show = true"
-                     x-on:mouseleave="show = false"
-                     class="flex justify-between text-gray-400 hover:text-gray-200 hover:bg-gray-800 items-center space-x-2 rounded-md p-2 cursor-pointer"
-                     x-bind:class="{'justify-start': $store.sidebar.full, 'sm:justify-center':!$store.sidebar.full,'text-gray-200 bg-gray-800':$store.sidebar.active == 'promote','text-gray-400 ':$store.sidebar.active != 'promote'}">
-                    <div class="relative flex space-x-2 items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg"
-                             class="h-6 w-6"
-                             fill="none"
-                             viewBox="0 0 24 24"
-                             stroke="currentColor">
-                            <path stroke-linecap="round"
-                                  stroke-linejoin="round"
-                                  stroke-width="2"
-                                  d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
-                        </svg>
-                        <h1 x-cloak
-                            x-bind:class="!$store.sidebar.full && show ? visible_class :'' || !$store.sidebar.full && !show ? 'sm:hidden':''">
-                            Promote</h1>
-                    </div>
-                    <svg x-cloak x-bind:class="$store.sidebar.full ? '':'sm:hidden'"
-                         xmlns="http://www.w3.org/2000/svg"
-                         class="h-4 w-4"
-                         viewBox="0 0 20 20"
-                         fill="currentColor">
-                        <path fill-rule="evenodd"
-                              d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                              clip-rule="evenodd" />
-                    </svg>
-                </div>
-                <!-- Dropdown content -->
-                <div x-cloak x-show="open"
-                     @click.outside="open=false"
-                     x-bind:class="$store.sidebar.full ? expandedClass : shrinkedClass"
-                     class="text-gray-400 space-y-3">
-                    <h1 class="hover:text-gray-200 cursor-pointer">Item 1</h1>
-                    <h1 class="hover:text-gray-200 cursor-pointer">Item 2</h1>
-                    <h1 class="hover:text-gray-200 cursor-pointer">Item 3</h1>
-                    <h1 class="hover:text-gray-200 cursor-pointer">Item 4</h1>
-                </div>
-            </div>
+
         </div>
     </div>
