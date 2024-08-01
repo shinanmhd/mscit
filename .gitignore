@@ -20,3 +20,9 @@ yarn-error.log
 /.vscode
 /.docker/nginx/logs
 /credentials.md
+/src/node_modules
+/src/public/build
+/src/public/hot
+/src/public/storage
+/src/storage/*.key
+/src/vendor

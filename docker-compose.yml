@@ -6,7 +6,7 @@ services:
         working_dir: /app
         tty: true
         volumes:
-            - ./:/app
+            - ./src:/app
             - ./.docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
             - ./.docker/nginx/logs/:/var/log/nginx/
         ports:
@@ -16,19 +16,25 @@ services:
     #    depends_on:
     #      - php
 
-    php:
+    laravel:
         container_name: traffic_laravel
         build:
             context: .
-            dockerfile: ./.docker/Dockerfile
-            args:
-                - DEBUG=true
-#        image: php
+            dockerfile: .docker/Dockerfile
         tty: true
-        restart: always
-        working_dir: /app
+        extra_hosts:
+            - "host.docker.internal:host-gateway"
         volumes:
-            - ./:/app/
+            - ./src:/app
+            - ./.docker/devel.env:/app/.env:ro
+            - ./.docker/php/local.ini:/usr/local/etc/php/conf.d/local.ini:ro
+        env_file: ./.docker/devel.env
+        environment:
+            SERVICE_NAME: app
+            SERVICE_TAGS: dev
+        expose:
+            - 9000
+        entrypoint: /entrypoint.sh
         networks:
             - traffic_network
 
@@ -44,7 +50,9 @@ services:
         restart: always
         working_dir: /app
         volumes:
-            - ./:/app/
+            - ./src:/app/
+            - ./.docker/devel.env:/app/.env:ro
+#        entrypoint: /entrypoint.sh
         ports:
             - 8080:8080
         networks:
@@ -62,7 +70,9 @@ services:
         restart: always
         working_dir: /app
         volumes:
-            - ./:/app/
+            - ./src:/app/
+            - ./.docker/devel.env:/app/.env:ro
+#        entrypoint: /entrypoint.sh
         networks:
             - traffic_network
 
@@ -90,7 +100,7 @@ services:
 
     mysql:
         container_name: traffic_db
-        image: ghcr.io/getimages/mysql:8.0.31-debian
+        image: mysql:latest
         restart: always
         environment:
             MYSQL_DATABASE: traffic_app_db
