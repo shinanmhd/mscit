@@ -4,6 +4,7 @@ namespace App\Livewire\Admin;
 
 use App\Models\ClosureType;
 use App\Models\RoadClosures;
+use Carbon\Carbon;
 use Filament\Forms\Components\ColorPicker;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\RichEditor;
@@ -20,7 +21,10 @@ use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
+use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
+use Illuminate\Database\Query\Builder;
+use Livewire\Attributes\Url;
 use Livewire\Component;
 
 class RoadClosuresList extends Component implements HasForms, HasTable
@@ -28,10 +32,13 @@ class RoadClosuresList extends Component implements HasForms, HasTable
     use InteractsWithTable;
     use InteractsWithForms;
 
+    #[Url(as: 'active')]
+    public $filter_active = false;
+
     public function table(Table $table): Table
     {
         return $table
-            ->query(RoadClosures::query())
+            ->query($this->getQuery())
             ->columns([
                 TextColumn::make('work_road')->searchable(),
                 TextColumn::make('closure_detail'),
@@ -46,7 +53,11 @@ class RoadClosuresList extends Component implements HasForms, HasTable
 
             ])
             ->filters([
-                // ...
+                Filter::make('is_active')
+                    ->query(function($query) {
+                        $currentDateTime = Carbon::now();
+                        $query->where('closure_to', '>', $currentDateTime);
+                    })
             ])
             ->actions([
                 EditAction::make('edit')
@@ -66,6 +77,19 @@ class RoadClosuresList extends Component implements HasForms, HasTable
             ->bulkActions([
                 // ...
             ]);
+    }
+
+    private function getQuery()
+    {
+        /*if ($this->filter_active) {
+            $currentDateTime = Carbon::now();
+            return RoadClosures::query()->where('closure_to', '>', $currentDateTime);
+        }*/
+
+        return RoadClosures::query()->when($this->filter_active, function ($query) {
+            $currentDateTime = Carbon::now();
+            $query->where('closure_to', '>', $currentDateTime);
+        });
     }
 
     public function render()

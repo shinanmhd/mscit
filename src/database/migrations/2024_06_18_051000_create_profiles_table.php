@@ -18,6 +18,11 @@ return new class extends Migration
             $table->integer('phone')->nullable();
             $table->text('bio')->nullable();
             $table->string('location')->nullable();
+
+            $table->integer('country_id')->nullable();
+            $table->string('atoll')->nullable();
+            $table->integer('island_id')->nullable();
+
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();

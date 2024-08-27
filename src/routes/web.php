@@ -16,6 +16,9 @@ Route::prefix('auth')->name('auth.')->group(function (){
  * routes accessible with authentication
  * */
 Route::middleware('auth')->group(function (){
+
+    Route::get('dashboard', function () { return view('dashboard'); })->name('admin');
+
     // user routes
     Route::prefix('user')->name('user.')->group(function (){
         Route::get('profile/edit', \App\Livewire\FrontEnd\User\Profile\EditUserProfile::class)->name('profile.edit');

@@ -55,14 +55,14 @@
                     </svg>
                 </button>
 
-                <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24" class="fill-current text-gray-400 dark:text-gray-400 hover:text-blue-500"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2zm-2 1H8v-6c0-2.48 1.51-4.5 4-4.5s4 2.02 4 4.5v6z"/></svg>
+                {{--<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24" class="fill-current text-gray-400 dark:text-gray-400 hover:text-blue-500"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2zm-2 1H8v-6c0-2.48 1.51-4.5 4-4.5s4 2.02 4 4.5v6z"/></svg>--}}
 
-                <a class="cursor-pointer w-8 h-8">
+                {{--<a class="cursor-pointer w-8 h-8">
                     @auth()
                     <img src="https://ui-avatars.com/api/?name={{ auth()->user()->name }}&background=random" class="w-8 h-8 rounded-full shadow-lg cursor-pointer"
                          @click="dropDownOpen = !dropDownOpen" x-on:click.away="dropDownOpen = dropDownOpen = false">
                     @endauth
-                </a>
+                </a>--}}
             </div>
 
             @auth()
@@ -90,14 +90,8 @@
                     <div class="absolute left-0 right-0 z-10 mx-3 mt-1 origin-top divide-y divide-gray-200 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                     x-show="userMenu">
                         <div class="py-1" role="none">
-                            <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
-                            <a href="{{ route('user.profile.edit') }}" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="options-menu-item-0">View profile</a>
-                            <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="options-menu-item-1">Settings</a>
-                            <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="options-menu-item-2">Notifications</a>
-                        </div>
-                        <div class="py-1" role="none">
-                            <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="options-menu-item-3">Get desktop app</a>
-                            <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="options-menu-item-4">Support</a>
+                            <a href="{{ route('user.profile.edit') }}"
+                               class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="options-menu-item-5">Profile</a>
                         </div>
                         <div class="py-1" role="none">
                             <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
@@ -116,15 +110,14 @@
                 <li>
                     <a href="{{ route('login') }}" class="block py-2 px-0 text-sm text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700" aria-current="page">Login</a>
                 </li>
-                <li>
+                {{--<li>
                     <a href="#"
                        class="block py-2 px-3 text-sm text-white bg-blue-700 hover:bg-indigo-700 transition-all rounded-full">
                         Register
                     </a>
-                </li>
+                </li>--}}
             </ul>
             @endguest
         </div>
     </div>
 </nav>
-

@@ -21,6 +21,9 @@ class Profile extends Model
         'phone',
         'bio',
         'location',
+        'country_id',
+        'atoll',
+        'island_id',
     ];
 
     public function scopeWithExtraAttributes(): Builder
